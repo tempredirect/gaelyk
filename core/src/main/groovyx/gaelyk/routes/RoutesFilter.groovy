@@ -101,6 +101,10 @@ class RoutesFilter implements Filter {
             if (route.method == HttpMethod.ALL || route.method.toString() == method) {
                 def result = route.forUri(requestURI)
                 if (result.matches) {
+                    if (route.ignore){
+                        // skip out completely
+                        break
+                    }
                     if (route.redirectionType == RedirectionType.FORWARD) {
                         filterConfig.servletContext.getRequestDispatcher(result.destination).forward request, response
                     } else {

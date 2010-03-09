@@ -45,11 +45,14 @@ class Route {
     /* Closure validating the variables match the required regex patterns */
     private Closure validator
 
+    /* Should a uri matching this route just be ignored? */
+    private boolean ignore
+    
     /**
      * Constructor taking a route, a destination, an HTTP method (optional), a redirection type (optional),
      * and a closure for validating the variables against regular expression patterns.
      */
-    Route(String route, String destination, HttpMethod method = HttpMethod.ALL, RedirectionType redirectionType = RedirectionType.FORWARD, Closure validator = null) {
+    Route(String route, String destination, HttpMethod method = HttpMethod.ALL, RedirectionType redirectionType = RedirectionType.FORWARD, Closure validator = null, boolean ignore = false) {
         this.route = route
         this.destination = destination
         this.variables = extractParameters(route)
@@ -58,10 +61,11 @@ class Route {
         this.redirectionType = redirectionType
 
         this.validator = validator
+        this.ignore = ignore
     }
 
     String toString() {
-        "[Route: $route, method: $method, redirection: $redirectionType, to: $destination]"
+        "[Route: $route, method: $method, redirection: $redirectionType, to: $destination, ignore: $ignore]"
     }
 
     /**

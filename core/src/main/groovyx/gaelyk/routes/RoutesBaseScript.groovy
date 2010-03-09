@@ -23,7 +23,7 @@ package groovyx.gaelyk.routes
 abstract class RoutesBaseScript extends Script {
     /** The list of routes available */
     List<Route> routes = []
-
+    
     def all   (Map m, String route) { handle m, route, HttpMethod.ALL }
     def get   (Map m, String route) { handle m, route, HttpMethod.GET }
     def post  (Map m, String route) { handle m, route, HttpMethod.POST }
@@ -38,9 +38,10 @@ abstract class RoutesBaseScript extends Script {
      */
     private handle(Map m, String route, HttpMethod method) {
         RedirectionType redirectionType = m.forward ? RedirectionType.FORWARD : RedirectionType.REDIRECT
+
         def destination = m.forward ?: m.redirect
         def validator = m.validate ?: null
 
-        routes << new Route(route, destination, method, redirectionType, validator)
+        routes << new Route(route, destination, method, redirectionType, validator, m.ignore)
     }
 }
