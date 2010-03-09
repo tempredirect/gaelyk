@@ -52,7 +52,7 @@ class Route {
      * Constructor taking a route, a destination, an HTTP method (optional), a redirection type (optional),
      * and a closure for validating the variables against regular expression patterns.
      */
-    Route(String route, String destination, HttpMethod method = HttpMethod.ALL, RedirectionType redirectionType = RedirectionType.FORWARD, Closure validator = null, boolean ignore = false) {
+    Route(String route, String destination, HttpMethod method = HttpMethod.ALL, RedirectionType redirectionType = RedirectionType.FORWARD, Closure validator = null, Boolean ignore = false) {
         this.route = route
         this.destination = destination
         this.variables = extractParameters(route)
