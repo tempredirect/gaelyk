@@ -5,10 +5,13 @@ new AntBuilder().sequential {
 
     // various directory places and file names
     src = "src/main"
+    testSrc = "src/test"
     lib = "lib"
 
     target = "target"
     classes = "${target}/classes"
+    testClasses = "${target}/test-classes"
+    testReports = "${target}/test-reports"
 
     jarname = "${target}/gaelyk-${version}.jar"
 
@@ -19,15 +22,19 @@ new AntBuilder().sequential {
     apidir = "../website/war/api"
 
     if (!args) {
-        echo "Usage: groovy build (jar|template|javadoc|dist)"
+        echo "Usage: groovy build (jar|template|javadoc|dist|clean|test)"
     } else {
         action = args[0]
 
         echo "Target: $action"
 
+        if (action == 'clean'){
+            delete dir: target
+        }
         if (action in ['jar', 'template', 'dist']) {
             echo "Creating classes directory"
             mkdir dir: classes
+            mkdir dir: testClasses
 
             echo "Compiling Gaelyk sources"
             taskdef name: "groovyc", classname: "org.codehaus.groovy.ant.Groovyc"
@@ -40,11 +47,40 @@ new AntBuilder().sequential {
                 }
                 javac source: "1.5", target: "1.5", debug: "on"
             }
+            echo "Compiling Gaelyk test sources"
+            taskdef name: "groovyc", classname: "org.codehaus.groovy.ant.Groovyc"
+            groovyc srcdir: testSrc, destdir: testClasses, {
+                classpath {
+                    fileset dir: lib, {
+                        include name: "*.jar"
+                    }
+                    pathelement path: classes
+                }
+                javac source: "1.5", target: "1.5", debug: "on"
+            }
 
             echo "Creating the Gaelyk JAR"
             jar basedir: classes, destfile: jarname
         }
-
+        if (action in ['dist','test']){
+            delete dir:testReports
+            mkdir dir:testReports
+            echo "Running unit tests"
+            junit fork:false, printsummary:true, haltonfailure:true, {
+                classpath {
+                    fileset dir: lib, {
+                        include name: "*.jar"
+                    }
+                    pathelement path: classes
+                    pathelement path: testClasses
+                }
+                batchtest todir:testReports, {
+                    fileset dir:testClasses, {
+                        include name:"**/*Test.class"
+                    }
+                }
+            }
+        }
         if (action in ['template', 'dist']) {
             echo "Deleting old Gaelyk JARs from the template project"
             delete {
