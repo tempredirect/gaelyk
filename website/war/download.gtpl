@@ -7,13 +7,43 @@ You can use the <b>Gaelyk</b> JAR in combination with Groovy 1.6 or 1.7 and with
 </p>
 
 <p>
-The latest version was tested with Groovy 1.7-RC-1,
-and with the 1.2.6 version of the App Engine SDK.
+The latest version was tested with Groovy 1.7.2,
+and with the 1.3.3.1 version of the App Engine SDK.
 </p>
 
 <p>
 But to get you started quickly, you may use a ready-made template project which bundles and configures everything.
 </p>
+
+<h2>Version 0.4</h2>
+
+<h3>Changes</h3>
+<ul>
+    <li>Created a <a href="/tutorial#plugin">simple plugin system</a> to futher modularize your applications and share commonalities between projects</li>
+</ul>
+
+<h3>Artifacts</h3>
+<ul>
+    <li>Gaelyk JAR: <a href="http://cloud.github.com/downloads/glaforge/gaelyk/gaelyk-0.4.jar">gaelyk-0.4.jar</a></li>
+    <li>Gaelyk template project: <a href="http://cloud.github.com/downloads/glaforge/gaelyk/gaelyk-template-project-0.4.zip">gaelyk-template-project-0.4.zip</a></li>
+</ul>
+
+<h2>Version 0.3.3</h2>
+
+<h3>Changes</h3>
+<ul>
+    <li>Upgraded to the latest versions of Groovy 1.7.2 and the GAE SDK 1.3.3.1</li>
+    <li>Fixed a long standing bug where we could not use <code>from</code> as named argument for <code>mail.send()</code></li>
+    <li>Small internal refactoring on how the binding variables are injected</li>
+    <li>Started adding a few more tests for improving the coverage of the project</li>
+    <li>Enhance the binding of the routes script, so you can have programmatic routes depending on GAE services (ie. one could store routes in the datastore)</li>
+</ul>
+
+<h3>Artifacts</h3>
+<ul>
+    <li>Gaelyk JAR: <a href="http://cloud.github.com/downloads/glaforge/gaelyk/gaelyk-0.3.3.jar">gaelyk-0.3.3.jar</a></li>
+    <li>Gaelyk template project: <a href="http://cloud.github.com/downloads/glaforge/gaelyk/gaelyk-template-project-0.3.3.zip">gaelyk-template-project-0.3.3.zip</a></li>
+</ul>
 
 <h2>Version 0.3.2</h2>
 
